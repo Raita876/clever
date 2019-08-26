@@ -54,7 +54,9 @@ func Parse() (Tasks, error) {
 
 // Run method
 func (task *Task) Run() {
-	c, err := shellwords.Parse(task.Command)
+	p := shellwords.NewParser()
+	p.ParseEnv = true
+	c, err := p.Parse(task.Command)
 	if err != nil {
 		panic(err.Error())
 	}
