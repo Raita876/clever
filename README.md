@@ -1,8 +1,11 @@
 # Clerver
+
 Task runner tool by Go
 
 # How to use
-tasks.yaml
+
+tasks.yaml(sample)
+
 ```
 hello:
   command: "echo HelloWorld"
@@ -11,6 +14,7 @@ ls:
 ```
 
 run
+
 ```
 $ ./clever hello ls
 HelloWorld
@@ -24,6 +28,7 @@ tasks.yaml
 ```
 
 # Todo
+
 - [ ] Add test.
 - [ ] Make the variable available.
 - [ ] Make environment variables usable。
