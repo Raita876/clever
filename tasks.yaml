@@ -1,0 +1,4 @@
+hello:
+  command: "echo HelloWorld"
+ls:
+  command: "ls -a"
