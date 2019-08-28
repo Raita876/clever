@@ -29,7 +29,7 @@ tasks.yaml
 
 # Todo
 
-- [ ] Add test.
+- [x] Add test.
 - [ ] Make the variable available.
 - [ ] Make environment variables usable。
 - [ ] Edit comment.
