@@ -35,8 +35,8 @@ func Args() []string {
 }
 
 // Parse method
-func Parse() (Tasks, error) {
-	buf, err := ioutil.ReadFile(TasksYamlFile)
+func Parse(taskFilePath string) (Tasks, error) {
+	buf, err := ioutil.ReadFile(taskFilePath)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -74,7 +74,7 @@ func (task *Task) Run() {
 
 func main() {
 	args := Args()
-	tasks, _ := Parse()
+	tasks, _ := Parse(TasksYamlFile)
 
 	for _, a := range args {
 		if _, ok := tasks[a]; ok {
