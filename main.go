@@ -53,7 +53,7 @@ func Parse(taskFilePath string) (Tasks, error) {
 }
 
 // Run method
-func (task *Task) Run() {
+func (task *Task) Run() (string, error) {
 	p := shellwords.NewParser()
 	p.ParseEnv = true
 	c, err := p.Parse(task.Command)
@@ -69,7 +69,7 @@ func (task *Task) Run() {
 		out, _ = exec.Command(c[0], c[1:]...).CombinedOutput()
 	}
 
-	fmt.Print(string(out))
+	return string(out), nil
 }
 
 func main() {
@@ -79,7 +79,8 @@ func main() {
 	for _, a := range args {
 		if _, ok := tasks[a]; ok {
 			t := tasks[a]
-			t.Run()
+			out, _ := t.Run()
+			fmt.Print(out)
 		}
 	}
 }

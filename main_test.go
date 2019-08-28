@@ -31,3 +31,22 @@ func TestParse(t *testing.T) {
 	}
 
 }
+
+func TestRun(t *testing.T) {
+	task := Task{
+		Command: "echo TestRun.",
+	}
+
+	out, err := task.Run()
+
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	expectedOut := "TestRun.\n"
+
+	if diff := cmp.Diff(out, expectedOut); diff != "" {
+		t.Errorf("Task Run mismatch (-out +expectedOut):\n%s", diff)
+	}
+
+}
