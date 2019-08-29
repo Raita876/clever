@@ -7,26 +7,31 @@ import (
 )
 
 func TestParse(t *testing.T) {
-	taskFilePath := "tasks.yaml"
-	tasks, err := Parse(taskFilePath)
+	filePath := "clefile.yaml"
+	cf, err := Parse(filePath)
 
 	if err != nil {
 		t.Error(err.Error())
 	}
 
-	expectedTasks := Tasks{
-		"hello": Task{
-			Command: "echo HelloWorld",
+	expectedCleverFile := CleverFile{
+		Tasks: Tasks{
+			"hello": Task{
+				Command: "echo HelloWorld",
+			},
+			"ls": Task{
+				Command: "ls -a",
+			},
+			"shell": Task{
+				Command: "echo $SHELL",
+			},
 		},
-		"ls": Task{
-			Command: "ls -a",
-		},
-		"shell": Task{
-			Command: "echo $SHELL",
+		Environments: map[string]string{
+			"FOO": "bar",
 		},
 	}
 
-	if diff := cmp.Diff(tasks, expectedTasks); diff != "" {
+	if diff := cmp.Diff(cf, expectedCleverFile); diff != "" {
 		t.Errorf("Tasks mismatch (-tasks +expectedTasks):\n%s", diff)
 	}
 

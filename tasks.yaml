@@ -1,6 +1,0 @@
-hello:
-  command: "echo HelloWorld"
-ls:
-  command: "ls -a"
-shell:
-  command: "echo $SHELL"

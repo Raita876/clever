@@ -10,12 +10,18 @@ import (
 	"github.com/mattn/go-shellwords"
 )
 
-// TasksYamlFile TaskFile path to load.
-const TasksYamlFile string = "tasks.yaml"
+// YamlFile TaskFile path to load.
+const YamlFile string = "clefile.yaml"
 
 // Runner interface
 type Runner interface {
 	Run()
+}
+
+// CleverFile struct
+type CleverFile struct {
+	Tasks        Tasks        `yaml:"tasks"`
+	Environments Environments `yaml:"environments"`
 }
 
 // Tasks list
@@ -23,8 +29,11 @@ type Tasks map[string]Task
 
 // Task struct
 type Task struct {
-	Command string
+	Command string `yaml:"command"`
 }
+
+// Environments list
+type Environments map[string]string
 
 // Args method
 func Args() []string {
@@ -35,21 +44,20 @@ func Args() []string {
 }
 
 // Parse method
-func Parse(taskFilePath string) (Tasks, error) {
-	buf, err := ioutil.ReadFile(taskFilePath)
+func Parse(filePath string) (CleverFile, error) {
+	buf, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	data := make(Tasks, 10)
-
-	err = yaml.Unmarshal(buf, &data)
+	var cf CleverFile
+	err = yaml.Unmarshal(buf, &cf)
 	if err != nil {
 		fmt.Println(err)
-		return nil, err
+		return cf, err
 	}
 
-	return data, nil
+	return cf, nil
 }
 
 // Run method
@@ -74,11 +82,11 @@ func (task *Task) Run() (string, error) {
 
 func main() {
 	args := Args()
-	tasks, _ := Parse(TasksYamlFile)
+	cf, _ := Parse(YamlFile)
 
 	for _, a := range args {
-		if _, ok := tasks[a]; ok {
-			t := tasks[a]
+		if _, ok := cf.Tasks[a]; ok {
+			t := cf.Tasks[a]
 			out, _ := t.Run()
 			fmt.Print(out)
 		}
