@@ -21,29 +21,29 @@ import (
 	"github.com/mattn/go-shellwords"
 )
 
-// YamlFile TaskFile path to load.
+// YamlFile clever (task runner) configuration file.
 const YamlFile string = "clefile.yaml"
 
-// Runner interface
+// Runner Interface that performs the given process.
 type Runner interface {
 	Run()
 }
 
-// CleverFile struct
+// CleverFile clever (task runner) configuration file struct.
 type CleverFile struct {
 	Tasks        Tasks        `yaml:"tasks"`
 	Environments Environments `yaml:"environments"`
 }
 
-// Tasks list
-type Tasks map[string]Task
-
-// Task struct
+// Task This is a struct that owns the command.
 type Task struct {
 	Command string `yaml:"command"`
 }
 
-// Environments list
+// Tasks List of tasks.
+type Tasks map[string]Task
+
+// Environments struct that holds environment variables as a list.
 type Environments map[string]string
 
 // Args Returns command line arguments in []string format.
@@ -71,7 +71,7 @@ func Parse(filePath string) (CleverFile, error) {
 	return cf, nil
 }
 
-// Run method
+// Run This function executes the command defined in Task.
 func (task *Task) Run() (string, error) {
 	p := shellwords.NewParser()
 	p.ParseEnv = true
