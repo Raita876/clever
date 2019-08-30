@@ -1,3 +1,8 @@
+/*
+Main package contains important processing of clever (task runner).
+
+*/
+
 package main
 
 import (
@@ -35,7 +40,7 @@ type Task struct {
 // Environments list
 type Environments map[string]string
 
-// Args method
+// Args Returns command line arguments in []string format.
 func Args() []string {
 	flag.Parse()
 	args := flag.Args()
@@ -43,7 +48,7 @@ func Args() []string {
 	return args
 }
 
-// Parse method
+// Parse Generate struct based on the specified yaml file.
 func Parse(filePath string) (CleverFile, error) {
 	buf, err := ioutil.ReadFile(filePath)
 	if err != nil {
