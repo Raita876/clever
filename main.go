@@ -1,6 +1,12 @@
 /*
 Main package contains important processing of clever (task runner).
 
+Usage:
+	./clever <task>...
+
+Options:
+	task: Required Arguments → Specify the task you want to execute.
+
 */
 
 package main
