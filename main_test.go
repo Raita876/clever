@@ -19,6 +19,9 @@ func TestParse(t *testing.T) {
 			"echo": Task{
 				Command: "echo $FOO",
 			},
+			"shell": Task{
+				Command: "echo $SHELL",
+			},
 		},
 		Environments: Environments{
 			Env{

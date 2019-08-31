@@ -1,6 +1,8 @@
 tasks:
   echo:
     command: "echo $FOO"
+  shell:
+    command: "echo $SHELL"
 environments:
   - name: "FOO"
     value: "bar"
