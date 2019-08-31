@@ -1,12 +1,6 @@
 /*
 Main package contains important processing of clever (task runner).
 
-Usage:
-	./clever <task>...
-
-Options:
-	task: Required Arguments → Specify the task you want to execute.
-
 */
 
 package main
@@ -47,6 +41,16 @@ type Tasks map[string]Task
 
 // Environments struct that holds environment variables as a list.
 type Environments map[string]string
+
+// Usage how to use clever.
+func Usage() {
+	usageTxt := `Usage: 
+	clever <task>...
+Options:
+	task: Required Arguments → Specify the task you want to execute.`
+
+	fmt.Printf("%s\n", usageTxt)
+}
 
 // Args Returns command line arguments in []string format.
 func Args() []string {
@@ -97,6 +101,7 @@ func (task *Task) Run() (string, error) {
 }
 
 func main() {
+	flag.Usage = Usage
 	args := Args()
 	cf, _ := Parse(YamlFile)
 
