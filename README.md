@@ -33,4 +33,4 @@ tasks.yaml
 - [x] Make the variable available.
 - [x] Make environment variables usable。
 - [x] Edit comment.
-- [ ] error handling.
+- [x] error handling.

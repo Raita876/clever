@@ -72,6 +72,11 @@ func Usage() {
 	fmt.Printf("%s\n", UsageTxt)
 }
 
+// PrintError method
+func PrintError(err error) {
+	fmt.Printf("Error: %s\n", err.Error())
+}
+
 // Args Returns command line arguments in []string format.
 func Args() []string {
 	flag.Parse()
@@ -127,7 +132,10 @@ func (task *Task) Run() (string, error) {
 func main() {
 	SetFlag()
 	args := Args()
-	cf, _ := Parse(YamlFile)
+	cf, err := Parse(YamlFile)
+	if err != nil {
+		PrintError(err)
+	}
 	cf.Environments.Set()
 
 	switch {
@@ -141,7 +149,10 @@ func main() {
 		for _, a := range args {
 			if _, ok := cf.Tasks[a]; ok {
 				t := cf.Tasks[a]
-				out, _ := t.Run()
+				out, err := t.Run()
+				if err != nil {
+					PrintError(err)
+				}
 				fmt.Print(out)
 			}
 		}
