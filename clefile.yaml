@@ -1,9 +1,6 @@
 tasks:
-  hello:
-    command: "echo HelloWorld"
-  ls:
-    command: "ls -a"
-  shell:
-    command: "echo $SHELL"
+  echo:
+    command: "echo $FOO"
 environments:
-  FOO: "bar"
+  - name: "FOO"
+    value: "bar"

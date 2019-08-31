@@ -16,18 +16,15 @@ func TestParse(t *testing.T) {
 
 	expectedCleverFile := CleverFile{
 		Tasks: Tasks{
-			"hello": Task{
-				Command: "echo HelloWorld",
-			},
-			"ls": Task{
-				Command: "ls -a",
-			},
-			"shell": Task{
-				Command: "echo $SHELL",
+			"echo": Task{
+				Command: "echo $FOO",
 			},
 		},
-		Environments: map[string]string{
-			"FOO": "bar",
+		Environments: Environments{
+			Env{
+				Name:  "FOO",
+				Value: "bar",
+			},
 		},
 	}
 
@@ -39,8 +36,15 @@ func TestParse(t *testing.T) {
 
 func TestRun(t *testing.T) {
 	task := Task{
-		Command: "echo TestRun.",
+		Command: "echo $FOO",
 	}
+	environments := Environments{
+		Env{
+			Name:  "FOO",
+			Value: "bar",
+		},
+	}
+	environments.Set()
 
 	out, err := task.Run()
 
@@ -48,10 +52,9 @@ func TestRun(t *testing.T) {
 		t.Error(err.Error())
 	}
 
-	expectedOut := "TestRun.\n"
+	expectedOut := "bar\n"
 
 	if diff := cmp.Diff(out, expectedOut); diff != "" {
 		t.Errorf("Task Run mismatch (-out +expectedOut):\n%s", diff)
 	}
-
 }

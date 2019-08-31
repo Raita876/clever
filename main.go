@@ -9,6 +9,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"os/exec"
 
 	"github.com/go-yaml/yaml"
@@ -47,8 +48,14 @@ type Task struct {
 // Tasks List of tasks.
 type Tasks map[string]Task
 
-// Environments struct that holds environment variables as a list.
-type Environments map[string]string
+// Env environment variable
+type Env struct {
+	Name  string `yaml:"name"`
+	Value string `yaml:"value"`
+}
+
+// Environments environment variables as a list.
+type Environments []Env
 
 // Usage function to display usage.
 func Usage() {
@@ -79,6 +86,13 @@ func Parse(filePath string) (CleverFile, error) {
 	return cf, nil
 }
 
+// Set set environment variables described in the configuration file.
+func (environments *Environments) Set() {
+	for _, e := range *environments {
+		os.Setenv(e.Name, e.Value)
+	}
+}
+
 // Run This function executes the command defined in Task.
 func (task *Task) Run() (string, error) {
 	var out []byte
@@ -104,6 +118,7 @@ func main() {
 	flag.Usage = Usage
 	args := Args()
 	cf, _ := Parse(YamlFile)
+	cf.Environments.Set()
 
 	switch {
 	case len(args) == 0:
