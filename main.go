@@ -17,6 +17,14 @@ import (
 
 var version string
 
+// UsageTxt how to use clever.
+const UsageTxt string = `This is a task runner tool that can manage tasks in Yaml format.
+
+Usage: 
+	clever <task>...
+Options:
+	task: Required Arguments → Specify the task you want to execute.`
+
 // YamlFile clever (task runner) configuration file.
 const YamlFile string = "clefile.yaml"
 
@@ -42,25 +50,15 @@ type Tasks map[string]Task
 // Environments struct that holds environment variables as a list.
 type Environments map[string]string
 
-// Usage how to use clever.
+// Usage function to display usage.
 func Usage() {
-	usageTxt := `This is a task runner tool that can manage tasks in Yaml format.
-
-Usage: 
-	clever <task>...
-Options:
-	task: Required Arguments → Specify the task you want to execute.`
-
-	fmt.Printf("%s\n", usageTxt)
+	fmt.Printf("%s\n", UsageTxt)
 }
 
 // Args Returns command line arguments in []string format.
 func Args() []string {
 	flag.Parse()
 	args := flag.Args()
-	if len(args) == 0 {
-		panic("Please specify an argument.")
-	}
 
 	return args
 }
@@ -107,8 +105,12 @@ func main() {
 	args := Args()
 	cf, _ := Parse(YamlFile)
 
-	switch arg := args[0]; {
-	case arg == "version":
+	switch {
+	case len(args) == 0:
+		flag.Usage()
+	case args[0] == "help":
+		flag.Usage()
+	case args[0] == "version":
 		fmt.Print(version)
 	default:
 		for _, a := range args {
