@@ -111,7 +111,7 @@ func main() {
 	case args[0] == "help":
 		flag.Usage()
 	case args[0] == "version":
-		fmt.Print(version)
+		fmt.Printf("%s\n", version)
 	default:
 		for _, a := range args {
 			if _, ok := cf.Tasks[a]; ok {
