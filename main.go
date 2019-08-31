@@ -132,11 +132,6 @@ func (task *Task) Run() (string, error) {
 func main() {
 	SetFlag()
 	args := Args()
-	cf, err := Parse(YamlFile)
-	if err != nil {
-		PrintError(err)
-	}
-	cf.Environments.Set()
 
 	switch {
 	case len(args) == 0:
@@ -146,6 +141,11 @@ func main() {
 	case args[0] == "version":
 		Version()
 	default:
+		cf, err := Parse(YamlFile)
+		if err != nil {
+			PrintError(err)
+		}
+		cf.Environments.Set()
 		for _, a := range args {
 			if _, ok := cf.Tasks[a]; ok {
 				t := cf.Tasks[a]
