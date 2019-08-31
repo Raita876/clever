@@ -67,13 +67,12 @@ func Args() []string {
 func Parse(filePath string) (CleverFile, error) {
 	buf, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		panic(err.Error())
+		return CleverFile{}, err
 	}
 
 	var cf CleverFile
 	err = yaml.Unmarshal(buf, &cf)
 	if err != nil {
-		fmt.Println(err)
 		return cf, err
 	}
 
@@ -82,14 +81,15 @@ func Parse(filePath string) (CleverFile, error) {
 
 // Run This function executes the command defined in Task.
 func (task *Task) Run() (string, error) {
+	var out []byte
+
 	p := shellwords.NewParser()
 	p.ParseEnv = true
 	c, err := p.Parse(task.Command)
 	if err != nil {
-		panic(err.Error())
+		return string(out), err
 	}
 
-	var out []byte
 	switch len(c) {
 	case 1:
 		out, _ = exec.Command(c[0]).CombinedOutput()
