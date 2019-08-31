@@ -56,3 +56,7 @@ version
 $ clever version
 0.1.0
 ```
+
+# Todo
+
+- [ ] Correct so that an appropriate error code is displayed.
