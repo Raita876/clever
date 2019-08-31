@@ -35,14 +35,14 @@ environments:
 run
 
 ```
-$ ./clever echo shell
+$ clever echo shell
 bar
 /bin/bash
 ```
 
 help
 ```
-$ ./clever help
+$ clever help
 This is a task runner tool that can manage tasks in Yaml format.
 
 Usage: 
@@ -53,6 +53,6 @@ Options:
 
 version
 ```
-$ ./clever version
+$ clever version
 0.1.0
 ```
