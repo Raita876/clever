@@ -1,36 +1,47 @@
 # Clerver
 
-Task runner tool by Go
+This is a task runner tool that can manage tasks in Yaml format.
+
+You can execute a command by specifying a task written in Yaml as an argument. Of course, multiple executions are possible.
+
+You can also specify environment variables that are required at runtime.
 
 # How to use
 
 tasks.yaml(sample)
 
 ```
-hello:
-  command: "echo HelloWorld"
-ls:
-  command: "ls -a"
+tasks:
+  echo:
+    command: "echo $FOO"
+  shell:
+    command: "echo $SHELL"
+environments:
+  - name: "FOO"
+    value: "bar"
 ```
 
 run
 
 ```
-$ ./clever hello ls
-HelloWorld
-.
-..
-Makefile
-README.md
-clever
-main.go
-tasks.yaml
+$ ./clever echo shell
+bar
+/bin/bash
 ```
 
-# Todo
+help
+```
+$ ./clever help
+This is a task runner tool that can manage tasks in Yaml format.
 
-- [x] Add test.
-- [x] Make the variable available.
-- [x] Make environment variables usable。
-- [x] Edit comment.
-- [x] error handling.
+Usage: 
+        clever <task>...
+Options:
+        task: Required Arguments → Specify the task you want to execute.
+```
+
+version
+```
+$ ./clever version
+0.1.0
+```
