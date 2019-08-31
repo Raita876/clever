@@ -57,6 +57,16 @@ type Env struct {
 // Environments environment variables as a list.
 type Environments []Env
 
+// SetFlag set command line options.
+func SetFlag() {
+	flag.Usage = Usage
+}
+
+// Version function to display version.
+func Version() {
+	fmt.Printf("%s\n", version)
+}
+
 // Usage function to display usage.
 func Usage() {
 	fmt.Printf("%s\n", UsageTxt)
@@ -115,7 +125,7 @@ func (task *Task) Run() (string, error) {
 }
 
 func main() {
-	flag.Usage = Usage
+	SetFlag()
 	args := Args()
 	cf, _ := Parse(YamlFile)
 	cf.Environments.Set()
@@ -126,7 +136,7 @@ func main() {
 	case args[0] == "help":
 		flag.Usage()
 	case args[0] == "version":
-		fmt.Printf("%s\n", version)
+		Version()
 	default:
 		for _, a := range args {
 			if _, ok := cf.Tasks[a]; ok {
