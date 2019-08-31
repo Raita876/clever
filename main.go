@@ -21,6 +21,8 @@ import (
 	"github.com/mattn/go-shellwords"
 )
 
+var version string
+
 // YamlFile clever (task runner) configuration file.
 const YamlFile string = "clefile.yaml"
 
@@ -50,6 +52,9 @@ type Environments map[string]string
 func Args() []string {
 	flag.Parse()
 	args := flag.Args()
+	if len(args) == 0 {
+		panic("Please specify an argument.")
+	}
 
 	return args
 }
@@ -95,11 +100,16 @@ func main() {
 	args := Args()
 	cf, _ := Parse(YamlFile)
 
-	for _, a := range args {
-		if _, ok := cf.Tasks[a]; ok {
-			t := cf.Tasks[a]
-			out, _ := t.Run()
-			fmt.Print(out)
+	switch arg := args[0]; {
+	case arg == "version":
+		fmt.Print(version)
+	default:
+		for _, a := range args {
+			if _, ok := cf.Tasks[a]; ok {
+				t := cf.Tasks[a]
+				out, _ := t.Run()
+				fmt.Print(out)
+			}
 		}
 	}
 }
