@@ -44,7 +44,9 @@ type Environments map[string]string
 
 // Usage how to use clever.
 func Usage() {
-	usageTxt := `Usage: 
+	usageTxt := `This is a task runner tool that can manage tasks in Yaml format.
+
+Usage: 
 	clever <task>...
 Options:
 	task: Required Arguments → Specify the task you want to execute.`
