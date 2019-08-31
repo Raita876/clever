@@ -19,7 +19,7 @@ curl -LO https://github.com/Raita876/clever/releases/download/0.1.1/clever-linux
 
 # How to use
 
-tasks.yaml(sample)
+clefile.yaml(sample)
 
 ```
 tasks:
